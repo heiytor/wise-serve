@@ -98,9 +98,9 @@ export class Enhancer {
     next: Interfaces.Next,
   ): any {
     response.sendJSON = function sendJSON(json: object): void {
-      if (!response.headersSent) {
-        response.setHeader('Content-Type', 'application/json');
-      }
+      response.writeHead(response.statusCode || 200, {
+        'Content-Type': 'application/json',
+      });
       response.end(JSON.stringify(json));
 
       return;

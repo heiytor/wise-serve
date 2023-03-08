@@ -25,6 +25,7 @@ export class Wise {
   };
 
   #middlewares: Array<Types.Route.RouteHandler> = [
+    Middlewares.Enhancer.Request,
     (
       req: Interfaces.Request,
       res: Interfaces.Response,
@@ -38,7 +39,6 @@ export class Wise {
       if (validations === 1) return;
       next();
     },
-    Middlewares.Enhancer.Request,
     Middlewares.Enhancer.Response,
   ];
 
@@ -108,7 +108,7 @@ export class Wise {
       /**
        * Make a single array with global and local middlewares. Middlewaremust follow this
        * sequence for each request:
-       * Security (like limits and cors) -> Request Wrapper -> Reponse Wrapper -> Local (like are configured on route)
+       * Request Enhancer -> Security (like limits and cors) ->  Response Enhancer -> Local (like are configured on route)
        */
       const middlewares = [...this.#middlewares, ...route.middlewares];
 

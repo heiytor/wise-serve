@@ -5,6 +5,7 @@
   "repository": "https://github.com/heiytor/wise-serve",
   "author": "Heitor Danilo <heitordanilo2003@gmail.com>",
   "license": "MIT",
+  "description": "A fast and easy-to-use Node.js web framework",
   "keywords": [
     "web framework",
     "node.js",

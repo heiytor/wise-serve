@@ -13,6 +13,7 @@ import * as Interfaces from '.';
 
 export interface WisePrivateOptions {
   env: 'development' | 'production';
+  verbose: number;
   protocols: {
     http: {
       enabled: boolean;

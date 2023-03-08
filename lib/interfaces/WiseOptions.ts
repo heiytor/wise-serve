@@ -12,6 +12,7 @@ export interface WiseOptions {
    * UNDER CONSTRUCTION
    */
   env?: 'development' | 'production';
+  verbose?: number;
   /**
    * The protocols object contains the configuration for
    * HTTP and HTTPS servers.

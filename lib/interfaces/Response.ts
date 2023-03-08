@@ -6,10 +6,20 @@
 import { ServerResponse } from 'http';
 
 /**
- * The `ServeResponse` interface extends the default ServerResponse interface and
- * provides easy methods to send different types of responses to the client.
- * @interface
+ * Interface representing the response that the server will send.
+ * This interface extends the Node.js core ServerRespose interface.
+ * @interface Response
  * @extends ServerResponse
+ *
+ * @example
+ * import wise, { Request, Response } from 'wise-serve';
+ *
+ * const app = wise();
+ *
+ * app.route('/user/{id}', (req: Request, res: Response) => {
+ *  // your logic above...
+ *  res.code(201).sendJSON({ user })
+ * });
  */
 export interface Response extends ServerResponse {
   /**

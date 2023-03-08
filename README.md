@@ -65,7 +65,7 @@ app.setOption({
 /** ...your logic */
 ```
 
-You can check the full cofiguration object with the documentation [HERE]().
+You can check the full cofiguration object with the documentation [HERE](https://github.com/heiytor/wise-serve/blob/main/lib/interfaces/WiseOptions.ts).
 
 ## Middlewares
 Wise is built around the concept of middlewares, which are functions that execute in the request-response processing pipeline. Currently, Wise does not support Express middlewares, but it provides three ways to add middlewares to your application.
@@ -128,7 +128,7 @@ app.setOptions({
 })
 ```
 
-You also can check all standard errors [HERE]().
+You also can check all standard errors [HERE](https://github.com/heiytor/wise-serve/blob/main/lib/defaults/errors.ts).
 
 # <h1 align="center">TO-DO</h1>
 
@@ -147,4 +147,4 @@ Anyway, I tried to comment on the source code as much as possible to make it as 
 
 If anyone is interested in the repository and would like to contribute with any bug reports or suggestions for additions, the issues tab is always open for you, and I will be more than happy to respond!
 
-License: [LICENSE.TXT]()
+License: [LICENSE.TXT](https://github.com/heiytor/wise-serve/blob/main/LICENSE.txt)

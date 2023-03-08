@@ -10,16 +10,16 @@ import * as Interfaces from '../interfaces';
  */
 export class Enhancer {
   /**
-   * A middleware function that enhances the Response objects by adding a useful attributes
-   * to next actions.
+   * A middleware function that enhances the Request objects by adding a useful methods to
+   * next actions.
    *
-   * @param {Interfaces.Request} request - The Request object.
-   * @param {Interfaces.Response} response - The Response object.
+   * @param {Interfaces.Request} request - Request object.
+   * @param {Interfaces.Response} response - Response object.
    * @param {Interfaces.Next} next - The callback function that passes control to the next middleware function.
    *
    * @returns {void} Call the next action instead return anything.
    */
-  public static Response(
+  public static Request(
     request: Interfaces.Request,
     response: Interfaces.Response,
     next: Interfaces.Next,
@@ -80,16 +80,16 @@ export class Enhancer {
   }
 
   /**
-   * A middleware function that enhances the Request objects by adding a useful methods to
-   * next actions.
+   * A middleware function that enhances the Response objects by adding a useful attributes
+   * to next actions.
    *
-   * @param {Interfaces.Request} request - Request object.
-   * @param {Interfaces.Response} response - Response object.
+   * @param {Interfaces.Request} request - The Request object.
+   * @param {Interfaces.Response} response - The Response object.
    * @param {Interfaces.Next} next - The callback function that passes control to the next middleware function.
    *
    * @returns {void} Call the next action instead return anything.
    */
-  public static Request(
+  public static Response(
     request: Interfaces.Request,
     response: Interfaces.Response,
     next: Interfaces.Next,

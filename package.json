@@ -5,6 +5,16 @@
   "repository": "https://github.com/heiytor/wise-serve",
   "author": "Heitor Danilo <heitordanilo2003@gmail.com>",
   "license": "MIT",
+  "keywords": [
+    "web framework",
+    "node.js",
+    "middleware",
+    "http server",
+    "http middleware",
+    "server-side",
+    "productivity",
+    "configuration"
+  ],
   "scripts": {
     "build": "tsc --build tsconfig.json",
     "build:tsup": "tsup ./lib --dts --format cjs,esm --target node18 --outDir ./dist"

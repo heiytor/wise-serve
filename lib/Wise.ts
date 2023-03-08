@@ -118,17 +118,17 @@ export class Wise {
        * If there are no more middlewares to execute, it calls the route action with the
        * request, response.
        *
-       * routeActionCalled is a flag to make sure that the route action will be executed only once.
+       * ROUTE_ACTION_CALLED is a flag to make sure that the route action will be executed only once.
        * Without this, the recursive function will call the action twice.
        */
-      let routeActionCalled = false;
+      let ROUTE_ACTION_CALLED = false;
       const next = () => {
         const middleware = middlewares[index++];
 
         if (middleware) {
           middleware(request, response, next);
-        } else if (route.action && !routeActionCalled) {
-          routeActionCalled = true;
+        } else if (route.action && !ROUTE_ACTION_CALLED) {
+          ROUTE_ACTION_CALLED = true;
           route.action(request, response);
         }
       };

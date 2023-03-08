@@ -4,6 +4,18 @@
  */
 
 /**
+ * You will use Next when you need to type your middlewares next function.
+ * @type (err?: Error) => void;
  *
+ * @example
+ * import wise, { Request, Response, Next } from 'wise-serve';
+ *
+ * const app = wise();
+ *
+ * function exampleMiddleware(req: Request, res: Response, next: Next) => {
+ *  // your logic...
+ * });
+ *
+ * app.add(exampleMiddleware)
  */
 export type Next = (err?: Error) => void;

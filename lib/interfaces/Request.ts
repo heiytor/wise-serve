@@ -12,13 +12,8 @@ import { IncomingMessage } from 'http';
  * @interface Request
  * @extends {IncomingMessage}
  *
- * @remarks
- * This interface provides a convenient and standardized way to access various aspects of a client request,
- * such as the request method, URL, headers, body, and parameters.
- *
  * @example
- * // Example usage:
- * import wise, { Request, Response } from 'express';
+ * import wise, { Request, Response } from 'wise-serve';
  *
  * const app = wise();
  *

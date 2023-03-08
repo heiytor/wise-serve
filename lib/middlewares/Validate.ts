@@ -19,10 +19,9 @@ export class Validate {
           request.headers['content-type'],
         )
       ) {
-        response.writeHead(wise.errors.invalidContentType.code, {
-          'Content-Type': 'application/json',
-        });
-        response.end(JSON.stringify(wise.errors.invalidContentType.body));
+        response
+          .code(wise.errors.invalidContentType.code)
+          .sendJSON(wise.errors.invalidContentType.body);
 
         return 1;
       }
@@ -34,10 +33,9 @@ export class Validate {
         Number(request.headers['content-length'] || '0') >
         wise.security.headers.contentLength
       ) {
-        response.writeHead(wise.errors.invalidContentLength.code, {
-          'Content-Type': 'application/json',
-        });
-        response.end(JSON.stringify(wise.errors.invalidContentLength.body));
+        response
+          .code(wise.errors.invalidContentLength.code)
+          .sendJSON(wise.errors.invalidContentLength.body);
 
         return 1;
       }
@@ -49,10 +47,9 @@ export class Validate {
         !request.headers['x-api-key'] ||
         !wise.security.headers.apiKey.includes(request.headers['x-api-key'])
       ) {
-        response.writeHead(wise.errors.invalidApiKey.code, {
-          'Content-Type': 'application/json',
-        });
-        response.end(JSON.stringify(wise.errors.invalidApiKey.body));
+        response
+          .code(wise.errors.invalidApiKey.code)
+          .sendJSON(wise.errors.invalidApiKey.body);
 
         return 1;
       }
@@ -76,10 +73,7 @@ export class Validate {
 
       if (errors.length > 0) {
         const error = wise.errors.invalidCustomHeader(errors);
-        response.writeHead(error.code, {
-          'Content-Type': 'application/json',
-        });
-        response.end(JSON.stringify(error.body));
+        response.code(error.code).sendJSON(error.body);
 
         return 1;
       }

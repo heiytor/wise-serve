@@ -9,6 +9,7 @@ import * as Errors from './errors';
 import * as Interfaces from './interfaces';
 import * as Types from './types';
 import * as Middlewares from './middlewares';
+import * as utils from './utils';
 
 export class Wise {
   #httpServe: any;
@@ -44,6 +45,7 @@ export class Wise {
 
   #serveOptions: Interfaces.WisePrivateOptions = {
     env: 'development',
+    verbose: 0,
     protocols: Defaults.protocols,
     security: Defaults.security,
     errors: Defaults.errors,
@@ -211,6 +213,9 @@ export class Wise {
     if (options.env) {
       this.#serveOptions.env = options.env;
     }
+    if (typeof options.verbose === 'number') {
+      this.#serveOptions.verbose = options.verbose;
+    }
     return;
   }
 
@@ -337,11 +342,7 @@ export class Wise {
         this.#handleRequest.bind(this) as any,
       );
       this.#httpServe.listen(http.port, () => {
-        if (this.#serveOptions.env === 'development') {
-          // console.log(this.#serveOptions);
-          // console.log(`\nHTTP -> port ${http.port}`);
-          // console.log(`\nHTTPS -> port ${https.port}`);
-        }
+        //
       });
     }
     if (https.enabled === true) {
@@ -350,6 +351,9 @@ export class Wise {
       //   this.#handleRequest.bind(this),
       // );
       // this.#httpsServe.listen(https.port, () => {});
+    }
+    if (this.#serveOptions.env === 'development') {
+      utils.outputWiseVerboseData(this.#serveOptions);
     }
     return;
   }

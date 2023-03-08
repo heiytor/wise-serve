@@ -25,21 +25,22 @@ export class Enhancer {
     next: Interfaces.Next,
   ): any {
     // reques.body & request.stringBody
-    let data = '';
-    request.on('data', (chunk) => {
-      data += chunk.toString();
-    });
-
-    request.on('end', () => {
-      try {
-        request.stringBody = data;
-        request.body = JSON.parse(data);
-      } catch (err) {
-        request.stringBody = '';
-        request.body = {};
-      }
-      next();
-      return response;
+    const bodyPromise = new Promise((resolve, reject) => {
+      let data = '';
+      request.on('data', (chunk) => {
+        data += chunk.toString();
+      });
+      request.on('end', () => {
+        try {
+          request.stringBody = data;
+          request.body = JSON.parse(data);
+          resolve(request.body);
+        } catch (err) {
+          request.stringBody = '';
+          request.body = {};
+          reject(err);
+        }
+      });
     });
 
     // request.query
@@ -75,7 +76,9 @@ export class Enhancer {
     request.protocol = request.headers['x-forwarded-proto'] || undefined;
     request.secure = request.protocol === 'https';
 
-    next();
+    bodyPromise.then(() => {
+      next();
+    });
     return;
   }
 
@@ -104,9 +107,9 @@ export class Enhancer {
     };
 
     response.sendHTML = function sendHTML(html: string): void {
-      if (!response.headersSent) {
-        response.setHeader('Content-Type', 'text/html');
-      }
+      response.writeHead(response.statusCode || 200, {
+        'Content-Type': 'text/html',
+      });
       response.end(html);
 
       return;

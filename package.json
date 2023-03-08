@@ -17,7 +17,7 @@
     "configuration"
   ],
   "scripts": {
-    "build": "tsc --build tsconfig.json",
+    "build:tsc": "tsc --build tsconfig.json",
     "build:tsup": "tsup ./lib --dts --format cjs,esm --target node18 --outDir ./dist"
   },
   "devDependencies": {

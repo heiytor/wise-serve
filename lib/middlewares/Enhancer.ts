@@ -43,40 +43,40 @@ export class Enhancer {
       });
     });
 
-    // request.query
-    const queryString = request.url.split('/').pop()!.split('?')[1];
-
-    const queryPairs = (queryString ?? '')
-      .split('&')
-      .map((pair) => pair.split('='));
-
-    request.query = queryPairs.reduce(
-      (params: Record<string, string | Array<string>>, [key, value]) => {
-        if (value !== undefined && value.includes(',')) {
-          params[key] = value.split(',').map(decodeURIComponent);
-        } else {
-          params[key] = decodeURIComponent(value);
-        }
-        return params;
-      },
-      {},
-    );
-
-    // request.parameters
-    /**
-     * In fact, I couldn't think of a way to remove request.parameters from the handler and put
-     * in the request enhancer. I'll be back here in the future, probably.
-     */
-
-    // request.cookies
-
-    // All above is taken away from headers
-    request.host = request.headers.host || undefined;
-    request.ip = request.headers['x-forwarded-for'] || undefined;
-    request.protocol = request.headers['x-forwarded-proto'] || undefined;
-    request.secure = request.protocol === 'https';
-
     bodyPromise.then(() => {
+      // request.query
+      const queryString = request.url.split('/').pop()!.split('?')[1];
+
+      const queryPairs = (queryString ?? '')
+        .split('&')
+        .map((pair) => pair.split('='));
+
+      request.query = queryPairs.reduce(
+        (params: Record<string, string | Array<string>>, [key, value]) => {
+          if (value !== undefined && value.includes(',')) {
+            params[key] = value.split(',').map(decodeURIComponent);
+          } else {
+            params[key] = decodeURIComponent(value);
+          }
+          return params;
+        },
+        {},
+      );
+
+      // request.parameters
+      /**
+       * In fact, I couldn't think of a way to remove request.parameters from the handler and put
+       * in the request enhancer. I'll be back here in the future, probably.
+       */
+
+      // request.cookies
+
+      // All above is taken away from headers
+      request.host = request.headers.host || undefined;
+      request.ip = request.headers['x-forwarded-for'] || undefined;
+      request.protocol = request.headers['x-forwarded-proto'] || undefined;
+      request.secure = request.protocol === 'https';
+
       next();
     });
     return;

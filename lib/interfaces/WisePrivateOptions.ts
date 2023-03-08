@@ -6,6 +6,11 @@
 import * as Types from '../types';
 import * as Interfaces from '.';
 
+/**
+ * This interfaces is only used by Wise class, if you are looking for attributes documentation, check
+ * WiseOptions interface.
+ */
+
 export interface WisePrivateOptions {
   env: 'development' | 'production';
   protocols: {

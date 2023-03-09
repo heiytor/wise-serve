@@ -29,15 +29,35 @@ import wise from 'wise-serve';
 
 const app = wise({
   protocols: {
-    http: { port: 8080 },
+    http: {
+      enabled: true,
+      port: 8080
+    },
   },
   security: {
     headers: {
-      // Reject any request without `'content-length': 'application/json'`
-      contentType: ['application/json'],
-      // Disable 'x-api-key' validation, this is the default functionality
-      apiKey: [],
+      /**
+       * Disables `content-type` validation, this is the default functionality for
+       * all headers.
+       */
+      contentType: {
+        routes: [],
+        values: [],
+      },
+      /**
+       * Enables 'x-api-key' validation to all routes.
+       */
+      apiKey: {
+        routes: ['*'],
+        values: ['4eafe863-894b-49b7-97fb-a3e318892bd4'],
+      },
     },
+    limits: {
+      // UNDER CONSTRUCTION.
+    },
+    cors: {
+      // UNDER CONSTRUCTION.
+    }
   },
 });
 
@@ -50,17 +70,7 @@ import wise from 'wise-serve';
 
 const app = wise();
 
-app.setOption({
-  protocols: {
-    http: { port: 8080 },
-  },
-  security: {
-    headers: {
-      contentType: ['application/json'],
-      apiKey: [],
-    },
-  },
-});
+app.setOption({ /** configuration object here */ });
 
 /** ...your logic */
 ```
@@ -114,14 +124,14 @@ Wise comes with built-in error handling to catch common errors and provide appro
 }
 ```
 
-You can customize error responses by providing your own error object in the errors property of the configuration object. Here's an example:
+You can customize the error responses by providing your own error object in the errors property of the configuration object. Here's an example:
 ```typescript
 app.setOptions({
   errors: {
     apiKey: {
-      // The status code that server will sent in the response
+      // The status code that Wise will sent in the response
       code: 401,
-      // The body that server will sent in the response
+      // The body that Wise will sent in the response
       body: { status: "error", errors: ['Invalid "x-api-key" header.'] }
     }
   }
@@ -133,7 +143,7 @@ You also can check all standard errors [HERE](https://github.com/heiytor/wise-se
 # <h1 align="center">TO-DO</h1>
 
 - [ ] Add more security middlewares.
-- [ ] Add a feature to only able security middlewares for designed routes.
+- [x] Add a feature to only able security middlewares for designed routes.
 - [ ] Add a CORS section under configuration object.
 - [ ] Finish HTTPS server.
 - [ ] Finish configurations for limitation.

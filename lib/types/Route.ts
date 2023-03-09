@@ -11,7 +11,7 @@ export type RouteMap =
       {
         directory: string;
         parameters: Array<string>;
-        middlewares: Array<RouteHandler>;
+        middlewares: any; //Array<RouteHandler>;
         action: RouteHandler;
       }
     >

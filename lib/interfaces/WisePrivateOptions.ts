@@ -27,12 +27,8 @@ export interface WisePrivateOptions {
     };
   };
   security: {
-    headers: {
-      apiKey: Array<string>;
-      contentType: Array<string>;
-      contentLength: number;
-      custom: Array<Record<string, Array<string>>>;
-    };
+    headers: Types.Security.Headers;
+    // custom: Array<Record<string, Array<string>>>; // };
     limits: {
       keepAliveTimeout: number;
       sizeLimit: string;

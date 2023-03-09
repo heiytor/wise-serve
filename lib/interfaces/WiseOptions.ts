@@ -97,7 +97,7 @@ export interface WiseOptions {
        * Wise.security.headers.apiKey = ['my-api-key-1', 'my-api-key-2'];
        * @type { Array<string> }
        */
-      apiKey?: Array<string>;
+      apiKey?: { routes: Array<string>; values: Array<string> };
 
       /**
        * An array specifying the allowed `content-type` header values.
@@ -114,7 +114,7 @@ export interface WiseOptions {
        *
        * @type { Array<string> }
        */
-      contentType?: Array<string>;
+      contentType?: { routes: Array<string>; values: Array<string> };
 
       /**
        * By default, the `content-length` header is set to `-1`, which allows any value for the `content-length` header.
@@ -129,7 +129,7 @@ export interface WiseOptions {
        *
        * @type { number }
        */
-      contentLength?: number;
+      contentLength?: { routes: Array<string>; values: Array<string> };
 
       /**
        * To set up custom headers, assign an array of key-value pairs to the `custom` property. Each key in the array
@@ -162,7 +162,7 @@ export interface WiseOptions {
 
   /**
    * Wise will attempt to catch all standard server errors and send a JSON response to the requester.
-   * You can provide custom objects with a status code and body to define custom error responses.
+   * You can provide custom objects with a status code and body to define custom errors responses.
    * @example
    * {
    *  code: 404, // statusCode as number

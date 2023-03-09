@@ -44,7 +44,7 @@ export function outputWiseVerboseData(
       security: wise.security,
       errors: wise.errors,
       routes: logRouteMap(wise.routes, wise.verbose),
-      midddlewares: wise.middlewares.slice(3),
+      midddlewares: wise.middlewares.slice(2),
     });
   } else if (wise.verbose === 1) {
     console.log({
@@ -53,7 +53,7 @@ export function outputWiseVerboseData(
       security: wise.security,
       errors: wise.errors,
       routes: logRouteMap(wise.routes, wise.verbose),
-      midddlewares: wise.middlewares.slice(3),
+      midddlewares: wise.middlewares.slice(2),
     });
   }
   return;

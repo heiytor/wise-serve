@@ -25,7 +25,7 @@ export class Enhancer {
     next: Interfaces.Next,
   ): any {
     // reques.body & request.stringBody
-    const bodyPromise = new Promise((resolve, reject) => {
+    const bodyPromise = new Promise((resolve) => {
       let data = '';
       request.on('data', (chunk) => {
         data += chunk.toString();
@@ -38,7 +38,7 @@ export class Enhancer {
         } catch (err) {
           request.stringBody = '';
           request.body = {};
-          reject(err);
+          resolve(request.body);
         }
       });
     });

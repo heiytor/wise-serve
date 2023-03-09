@@ -4,7 +4,7 @@
  */
 
 import * as HTTP from 'http';
-import * as Defaults from './defaults';
+import * as defaults from './defaults';
 import * as Errors from './errors';
 import * as Interfaces from './interfaces';
 import * as Types from './types';
@@ -28,27 +28,14 @@ export class Wise {
   #middlewares: Array<Types.Route.RouteHandler> = [
     Middlewares.Enhancer.Request,
     Middlewares.Enhancer.Response,
-    (
-      req: Interfaces.Request,
-      res: Interfaces.Response,
-      next: Interfaces.Next,
-    ) => {
-      const validations = Middlewares.Validate.All(
-        req,
-        res,
-        this.#serveOptions,
-      );
-      if (validations === 1) return;
-      next();
-    },
   ];
 
   #serveOptions: Interfaces.WisePrivateOptions = {
     env: 'development',
     verbose: 0,
-    protocols: Defaults.protocols,
-    security: Defaults.security,
-    errors: Defaults.errors,
+    protocols: defaults.protocols,
+    security: defaults.security,
+    errors: defaults.errors,
     routes: this.#routes,
     middlewares: this.#middlewares,
   };
@@ -128,7 +115,7 @@ export class Wise {
         const middleware = middlewares[index++];
 
         if (middleware) {
-          middleware(request, response, next);
+          middleware(request, response, next, this.#serveOptions);
         } else if (route.action && !ROUTE_ACTION_CALLED) {
           ROUTE_ACTION_CALLED = true;
           route.action(request, response);
@@ -263,18 +250,6 @@ export class Wise {
       directory = directory.slice(0, -1);
     }
 
-    const middlewares: Array<Types.Route.RouteHandler> = [];
-    const action: Types.Route.RouteHandler =
-      actions.pop() as Types.Route.RouteHandler;
-
-    for (const h of actions) {
-      if (typeof h === 'function') {
-        middlewares.push(h);
-      } else {
-        throw new Errors.Route.InvalidMiddleware();
-      }
-    }
-
     const parameters: Array<string> = [];
     /**
      * We saved the directory as a regex pattern, this allows future search for
@@ -302,10 +277,41 @@ export class Wise {
      *  2. ([?][^/]*?)? -> checks if there any query string.
      */
     const pattern = `^\\/${routeSegments.join('\\/')}\\/?([?][^/]*?)?$`;
-    // TO-DO: Accept query string in any route directory
 
     if (this.#routes[method][pattern]) {
       throw new Errors.Route.Conflicting(directory);
+    }
+
+    const middlewares: Array<any> = []; //Array<Types.Route.RouteHandler> = [];
+    const action: Types.Route.RouteHandler = actions.pop() as any;
+
+    const SECURITY_HEADERS = this.#serveOptions.security.headers;
+    for (const [key] of Object.entries(SECURITY_HEADERS)) {
+      /**
+       * We saved our security headers in camelCase, however, all Middlewares.Validate
+       * methods are static, so, we save them in UpperCamelCase. This const allows us
+       * to access these methods.
+       */
+      const MIDDLEWARE_KEY = key.charAt(0).toUpperCase() + key.slice(1);
+
+      if (SECURITY_HEADERS[key].routes.includes('*')) {
+        middlewares.push(Middlewares.Validate[MIDDLEWARE_KEY as never]);
+        continue;
+      }
+
+      if (SECURITY_HEADERS[key].routes.includes(directory)) {
+        middlewares.push(Middlewares.Validate[MIDDLEWARE_KEY as never]);
+        continue;
+      }
+    }
+
+    // Local middlewares are saved in this for.
+    for (const a of actions) {
+      if (typeof a === 'function') {
+        middlewares.push(a);
+      } else {
+        throw new Errors.Route.InvalidMiddleware();
+      }
     }
 
     if (method === 'ALL') {

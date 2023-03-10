@@ -51,6 +51,15 @@ const app = wise({
         routes: ['*'],
         values: ['4eafe863-894b-49b7-97fb-a3e318892bd4'],
       },
+      /**
+       * Enables custom header `X-Auth-User` to /admin directory.
+       */
+      custom: [
+        { 'X-Auth-User': {
+          routes: ['/admin'],
+          values: ['admin'] },
+        },
+      ],
     },
     limits: {
       // UNDER CONSTRUCTION.
@@ -142,8 +151,9 @@ You also can check all standard errors [HERE](https://github.com/heiytor/wise-se
 
 # <h1 align="center">TO-DO</h1>
 
-- [ ] Add more security middlewares.
 - [x] Add a feature to only able security middlewares for designed routes.
+- [x] Add custom security headers.
+- [ ] Add more security middlewares.
 - [ ] Add a CORS section under configuration object.
 - [ ] Finish HTTPS server.
 - [ ] Finish configurations for limitation.

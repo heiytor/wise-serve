@@ -286,13 +286,20 @@ export class Wise {
     const action: Types.Route.RouteHandler = actions.pop() as any;
 
     const SECURITY_HEADERS = this.#serveOptions.security.headers;
-    for (const [key] of Object.entries(SECURITY_HEADERS)) {
+    for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
       /**
        * We saved our security headers in camelCase, however, all Middlewares.Validate
        * methods are static, so, we save them in UpperCamelCase. This const allows us
        * to access these methods.
        */
       const MIDDLEWARE_KEY = key.charAt(0).toUpperCase() + key.slice(1);
+
+      // security.headers.custom will always fall here
+      if (Array.isArray(value)) {
+        if (value.length <= 0) continue;
+        middlewares.push(Middlewares.Validate.Custom);
+        continue;
+      }
 
       if (SECURITY_HEADERS[key].routes.includes('*')) {
         middlewares.push(Middlewares.Validate[MIDDLEWARE_KEY as never]);

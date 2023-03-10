@@ -152,7 +152,7 @@ export interface WiseOptions {
        *
        * @type { Array<Record<string, Array<string>>> }
        */
-      custom?: Array<Record<string, Array<string>>>;
+      custom?: Array<Record<string, any>>;
     };
     limits?: {
       keepAliveTimeout?: number;

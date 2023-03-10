@@ -63,6 +63,9 @@ export class Enhancer {
         {},
       );
 
+      // Removes query strings from the directory
+      request.url = request.url.split('?')[0];
+
       // request.parameters
       /**
        * In fact, I couldn't think of a way to remove request.parameters from the handler and put

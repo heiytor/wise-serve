@@ -1,4 +1,1 @@
-export type Headers = Record<
-  string,
-  { routes: Array<string>; values: Array<string> }
->;
+export type Headers = Record<string, any | Array<Record<string, any>>>;

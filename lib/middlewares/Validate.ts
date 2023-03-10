@@ -10,11 +10,11 @@ export class Validate {
   public static ContentType(
     request: Interfaces.Request,
     response: Interfaces.Response,
-    wise: Interfaces.WisePrivateOptions,
     next: Interfaces.Next,
+    wise: Interfaces.WisePrivateOptions,
   ): void {
     const CONTENT_TYPE_VALIDATOR = wise.security.headers.contentType;
-    if ((CONTENT_TYPE_VALIDATOR.values, length > 0)) {
+    if (CONTENT_TYPE_VALIDATOR.values.length > 0) {
       if (
         !request.headers['content-type'] ||
         !CONTENT_TYPE_VALIDATOR.values.includes(request.headers['content-type'])
@@ -35,8 +35,8 @@ export class Validate {
   public static ContentLength(
     request: Interfaces.Request,
     response: Interfaces.Response,
-    wise: Interfaces.WisePrivateOptions,
     next: Interfaces.Next,
+    wise: Interfaces.WisePrivateOptions,
   ): void {
     const CONTENT_LENGTH_VALIDATOR = wise.security.headers.contentLength;
     if (Number(CONTENT_LENGTH_VALIDATOR.values[0]) >= 1) {
@@ -79,32 +79,44 @@ export class Validate {
     return;
   }
 
-  // public static Custom(
-  //   request: Interfaces.Request,
-  //   response: Interfaces.Response,
-  //   next: Interfaces.Next,
-  //   wise: Interfaces.WisePrivateOptions,
-  // ): void {
-  // if (wise.security.headers.custom.length > 0) {
-  //   /**
-  //    * We make an array with invalid headers, this will let us to return something
-  //    * like this:
-  //    * { errors: [`Invalid ${HEADER_1}`, `Invalid ${HEADER_2}, ...`] }
-  //    */
-  //   const errors: Array<string> = [];
-  //   wise.security.headers.custom.forEach((header) => {
-  //     const [key, values] = Object.entries(header)[0];
-  //     if (!request.headers[key] || !values.includes(request.headers[key])) {
-  //       errors.push(`Invalid "${key}" header.`);
-  //     }
-  //   });
-  //   if (errors.length > 0) {
-  //     const error = wise.errors.invalidCustomHeader(errors);
-  //     response.code(error.code).sendJSON(error.body);
-  //     return 1;
-  //   }
-  // }
-  //
-  // return;
-  // }
+  public static Custom(
+    request: Interfaces.Request,
+    response: Interfaces.Response,
+    next: Interfaces.Next,
+    wise: Interfaces.WisePrivateOptions,
+  ): void {
+    const CUSTOM_HEADERS = wise.security.headers.custom;
+    if (CUSTOM_HEADERS.length > 0) {
+      /**
+       * We make an array with invalid headers, this will let us to return something
+       * like this:
+       * { errors: [`Invalid ${HEADER_1}`, `Invalid ${HEADER_2}, ...`] }
+       */
+      const invalidHeaders: Array<string> = [];
+      CUSTOM_HEADERS.forEach((header: any) => {
+        const [key, values] = Object.entries(header)[0];
+        const routes = (values as any).routes;
+        const headers = (values as any).values;
+        if (
+          routes.includes('*') === true ||
+          routes.includes(request.url) === true
+        ) {
+          if (
+            !request.headers[key] ||
+            !headers.includes(request.headers[key])
+          ) {
+            invalidHeaders.push(`Invalid "${key}" header.`);
+          }
+        }
+      });
+      if (invalidHeaders.length > 0) {
+        const error = wise.errors.invalidCustomHeader(invalidHeaders);
+        response.code(error.code).sendJSON(error.body);
+        return;
+      }
+    }
+
+    next();
+    return;
+  }
 }

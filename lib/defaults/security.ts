@@ -8,7 +8,7 @@ export const security = {
     apiKey: { routes: [], values: [] },
     contentLength: { routes: [], values: [] },
     contentType: { routes: [], values: [] },
-    // custom: [],
+    custom: [],
   },
   limits: {
     keepAliveTimeout: 0,

@@ -41,7 +41,7 @@ export function outputWiseVerboseData(
     console.log({
       env: wise.env,
       protocols: wise.protocols,
-      security: wise.security,
+      headers: wise.headers,
       errors: wise.errors,
       routes: logRouteMap(wise.routes, wise.verbose),
       midddlewares: wise.middlewares.slice(2),
@@ -50,7 +50,7 @@ export function outputWiseVerboseData(
     console.log({
       env: wise.env,
       protocols: wise.protocols,
-      security: wise.security,
+      headers: wise.headers,
       errors: wise.errors,
       routes: logRouteMap(wise.routes, wise.verbose),
       midddlewares: wise.middlewares.slice(2),

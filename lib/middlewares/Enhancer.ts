@@ -100,7 +100,7 @@ export class Enhancer {
     response: Interfaces.Response,
     next: Interfaces.Next,
   ): any {
-    response.sendJSON = function sendJSON(json: object): void {
+    response.json = function sendJSON(json: object): void {
       response.writeHead(response.statusCode || 200, {
         'Content-Type': 'application/json',
       });
@@ -109,7 +109,7 @@ export class Enhancer {
       return;
     };
 
-    response.sendHTML = function sendHTML(html: string): void {
+    response.html = function sendHTML(html: string): void {
       response.writeHead(response.statusCode || 200, {
         'Content-Type': 'text/html',
       });
@@ -118,7 +118,7 @@ export class Enhancer {
       return;
     };
 
-    response.sendHeaders = function sendHeaders(
+    response.headers = function sendHeaders(
       headers: Record<string, string>,
     ): Interfaces.Response {
       for (const header in headers) {
@@ -128,7 +128,7 @@ export class Enhancer {
       return response;
     };
 
-    response.code = function code(code: number): Interfaces.Response {
+    response.status = function code(code: number): Interfaces.Response {
       response.statusCode = code;
 
       return response;

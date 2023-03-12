@@ -13,7 +13,9 @@ import * as Interfaces from '.';
 
 export interface WisePrivateOptions {
   env: 'development' | 'production';
+
   verbose: number;
+
   protocols: {
     http: {
       enabled: boolean;
@@ -26,14 +28,23 @@ export interface WisePrivateOptions {
       key: string;
     };
   };
-  security: {
-    headers: Types.Security.Headers;
-    // custom: Array<Record<string, Array<string>>>; // };
-    limits: {
-      keepAliveTimeout: number;
-      sizeLimit: string;
-    };
+
+  headers: {
+    apiKey: { routes: Array<string>; values: Array<string> };
+    contentType: { routes: Array<string>; values: Array<string> };
+    contentLength: { routes: Array<string>; values: Array<string> };
+    custom: Array<Record<string, any>>;
   };
+
+  // security: {
+  //   headers: Types.Security.Headers;
+  //   // custom: Array<Record<string, Array<string>>>; // };
+  //   limits: {
+  //     keepAliveTimeout: number;
+  //     sizeLimit: string;
+  //   };
+  // };
+
   errors: {
     default: Types.Server.ErrorResponse;
     invalidApiKey: Types.Server.ErrorResponse;
@@ -44,6 +55,8 @@ export interface WisePrivateOptions {
       errors: Array<string>,
     ) => Types.Server.ErrorResponse | Types.Server.ErrorResponse;
   };
+
   routes: Interfaces.Routes;
+
   middlewares: Array<Types.Route.RouteHandler>;
 }

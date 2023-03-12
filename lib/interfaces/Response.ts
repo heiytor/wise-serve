@@ -18,44 +18,46 @@ import { ServerResponse } from 'http';
  *
  * app.route('/user/{id}', (req: Request, res: Response) => {
  *  // your logic above...
- *  res.code(201).sendJSON({ user })
+ *  res.status(201).json({ user })
  * });
  */
 export interface Response extends ServerResponse {
   /**
    * Sends a JSON formatted response to the client.
-   * @param {object} data - The object to be returned in the response body.
+   * @param {object} json - The object to be returned in the response body.
    * @example
-   * response.sendJSON({ status: 'success' });
+   * response.json({ status: 'success' });
    */
-  sendJSON: (data: object) => void;
+  json: (json: object) => void;
 
   /**
    * Sends an HTML formatted response to the client.
    * @param {string} html - The HTML to be returned in the response body.
    * @example
-   * response.sendHTML('<h1>My Website!</h1>');
+   * response.html('<h1>My Website!</h1>');
    */
-  sendHTML: (html: string) => void;
+  html: (html: string) => void;
 
   /**
    * Sends custom headers to the client.
    * @param {object} headers - The headers to be sent in the response.
+   * @example
+   * response.headers({ 'my-header': 'my-header-value' })
    */
-  sendHeaders: (headers: Record<string, string>) => Response;
+  headers: (headers: Record<string, string>) => Response;
 
   /**
    * Sets the HTTP status code for the response.
-   * @param {number} code - The status code to be set.
+   * @param {number} status - The status code to be set.
    * @example
-   * response.code(200);
+   * response.status(200);
    */
-  code: (code: number) => Response;
+  status: (status: number) => Response;
 
   /**
    * TO-DO
-   * redirect: um método que redireciona o cliente para outra URL.
-   * cookie: um método para definir cookies no cabeçalho da resposta.
-   * clearCookie: um método para remover cookies definidos anteriormente no cabeçalho da resposta.
+   * redirect
+   * cookie
+   * clearCookie
    */
 }

@@ -75,7 +75,7 @@ export interface WiseOptions {
     };
   };
 
-  headers: {
+  headers?: {
     /**
      * An object specifying the allowed values for `x-api-key` header values and which routes will validate this.
      *

@@ -6,7 +6,7 @@
 import { Wise } from './Wise';
 import { WiseOptions } from './interfaces';
 export { Response, Request, Next, WiseOptions } from './interfaces';
-export { ServerError as WiseError } from './types/Server';
+export { ErrorResponse } from './types/Server';
 
 export default function wise(options?: WiseOptions): Wise {
   return new Wise(options);

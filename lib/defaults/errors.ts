@@ -29,7 +29,7 @@ export const errors = {
     code: 404,
     body: { status: 'error', errors: ['Invalid route.'] },
   },
-  invalidCustomHeader(errors: Array<string>): Types.Server.ServerError {
+  invalidCustomHeader(errors: Array<string>): Types.Server.ErrorResponse {
     return {
       code: 400,
       body: { status: 'error', errors },

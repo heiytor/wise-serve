@@ -213,7 +213,7 @@ export interface WiseOptions {
      *  body: { status: 'error', errors: ['Unexpected error. Try again later or contact support.'] }
      * }
      */
-    default?: Types.Server.ServerError;
+    default?: Types.Server.ErrorResponse;
 
     /**
      * Response for invalid `content-type`, set `Wise.security.headers.apiKey = [*]` to avoid this. Default response:
@@ -223,7 +223,7 @@ export interface WiseOptions {
      *  body: { status: 'error', errors: ['Invalid x-api-key header.'] }
      * }
      */
-    invalidApiKey?: Types.Server.ServerError;
+    invalidApiKey?: Types.Server.ErrorResponse;
 
     /**
      * Response for invalid `x-api-key`, set `Wise.security.headers.apiKey = -1` or less to avoid this. Default response:
@@ -233,7 +233,7 @@ export interface WiseOptions {
      *  body: { status: 'error', errors: ['Invalid content-type header.'] }
      * }
      */
-    invalidContentType?: Types.Server.ServerError;
+    invalidContentType?: Types.Server.ErrorResponse;
 
     /**
      * Response for invalid `content-length`, set `Wise.security.headers.contentLength = -1` or less to avoid this. Default response:
@@ -243,7 +243,7 @@ export interface WiseOptions {
      *  body: { status: 'error', errors: ['Invalid content-length header.'] }
      * }
      */
-    invalidContentLength?: Types.Server.ServerError;
+    invalidContentLength?: Types.Server.ErrorResponse;
 
     /**
      * Response for `routes not found`. Default response:
@@ -253,7 +253,7 @@ export interface WiseOptions {
      *  body: { status: 'error', errors: ['Invalid route.'] }
      * }
      */
-    invalidRoute?: Types.Server.ServerError;
+    invalidRoute?: Types.Server.ErrorResponse;
 
     /**
      * Response for invalid `custom headers`. Default response:
@@ -272,7 +272,7 @@ export interface WiseOptions {
      */
     invalidCustomHeader: (
       errors: Array<string>,
-    ) => Types.Server.ServerError | Types.Server.ServerError;
+    ) => Types.Server.ErrorResponse | Types.Server.ErrorResponse;
   };
 
   middlewares?: Array<Types.Route.RouteHandler>;

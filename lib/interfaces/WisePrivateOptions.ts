@@ -35,14 +35,14 @@ export interface WisePrivateOptions {
     };
   };
   errors: {
-    default: Types.Server.ServerError;
-    invalidApiKey: Types.Server.ServerError;
-    invalidContentType: Types.Server.ServerError;
-    invalidContentLength: Types.Server.ServerError;
-    invalidRoute: Types.Server.ServerError;
+    default: Types.Server.ErrorResponse;
+    invalidApiKey: Types.Server.ErrorResponse;
+    invalidContentType: Types.Server.ErrorResponse;
+    invalidContentLength: Types.Server.ErrorResponse;
+    invalidRoute: Types.Server.ErrorResponse;
     invalidCustomHeader: (
       errors: Array<string>,
-    ) => Types.Server.ServerError | Types.Server.ServerError;
+    ) => Types.Server.ErrorResponse | Types.Server.ErrorResponse;
   };
   routes: Interfaces.Routes;
   middlewares: Array<Types.Route.RouteHandler>;

@@ -5,8 +5,16 @@ Wise is a NodeJS framework that is designed to be fast, user-friendly, and easil
 Wise was specifically created to simplify the process of building web servers. With standard error handling and pre-built middleware, developers can save time by avoiding repetitive tasks. For example, Wise provides a standard 404 response, validation of x-api-key, and middleware for decrypting a JWT, making it easy to incorporate these common features into a project.
 
 # <h1 align="center">Usage</h1>
-While Wise is not on NPM, you can clone this repository.
-
+! **Note: all code above is written using typescript**
+## Installation
+NPM:
+```bash
+npm install wise-serve
+```
+Yarn:
+```bash
+yarn add wise-serve
+```
 ## Basic usage
 Here's an example of how to use Wise to create a simple HTTP server that responds with a JSON object:
 ```typescript

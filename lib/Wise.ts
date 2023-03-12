@@ -34,7 +34,7 @@ export class Wise {
     env: 'development',
     verbose: 0,
     protocols: defaults.protocols,
-    security: defaults.security,
+    headers: defaults.headers,
     errors: defaults.errors,
     routes: this.#routes,
     middlewares: this.#middlewares,
@@ -169,18 +169,11 @@ export class Wise {
         options.errors,
       );
     }
-    if (options.security?.headers) {
-      this.#serveOptions.security.headers = Object.assign(
+    if (options.headers) {
+      this.#serveOptions.headers = Object.assign(
         {},
-        this.#serveOptions.security.headers,
-        options.security.headers,
-      );
-    }
-    if (options.security?.limits) {
-      this.#serveOptions.security.limits = Object.assign(
-        {},
-        this.#serveOptions.security.limits,
-        options.security.limits,
+        this.#serveOptions.headers,
+        options.headers,
       );
     }
     if (options.protocols?.http) {
@@ -285,8 +278,8 @@ export class Wise {
     const middlewares: Array<any> = []; //Array<Types.Route.RouteHandler> = [];
     const action: Types.Route.RouteHandler = actions.pop() as any;
 
-    const SECURITY_HEADERS = this.#serveOptions.security.headers;
-    for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
+    const HEADERS = this.#serveOptions.headers;
+    for (const [key, value] of Object.entries(HEADERS)) {
       /**
        * We saved our security headers in camelCase, however, all Middlewares.Validate
        * methods are static, so, we save them in UpperCamelCase. This const allows us
@@ -301,12 +294,12 @@ export class Wise {
         continue;
       }
 
-      if (SECURITY_HEADERS[key].routes.includes('*')) {
+      if (value.routes.includes('*')) {
         middlewares.push(Middlewares.Validate[MIDDLEWARE_KEY as never]);
         continue;
       }
 
-      if (SECURITY_HEADERS[key].routes.includes(directory)) {
+      if (value.routes.includes(directory)) {
         middlewares.push(Middlewares.Validate[MIDDLEWARE_KEY as never]);
         continue;
       }
@@ -330,8 +323,10 @@ export class Wise {
           action,
         };
       }
+
       return;
     }
+
     this.#routes[method][pattern] = {
       directory,
       parameters,

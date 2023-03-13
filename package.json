@@ -1,6 +1,6 @@
 {
   "name": "wise-serve",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "main": "./dist/index.js",
   "repository": "https://github.com/heiytor/wise-serve",
   "author": "Heitor Danilo <heitordanilo2003@gmail.com>",
@@ -17,8 +17,7 @@
     "configuration"
   ],
   "scripts": {
-    "build:tsc": "tsc --build tsconfig.json",
-    "build:tsup": "tsup ./lib --dts --format cjs,esm --target node18 --outDir ./dist"
+    "build": "tsup ./lib --dts --format cjs,esm --target node18 --outDir ./dist"
   },
   "devDependencies": {
     "@types/node": "^18.14.6",
